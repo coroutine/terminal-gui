@@ -3,6 +3,9 @@
 This project is a concept UI that recreates much of the functionality most of 
 us use in our Mac terminals.
 
+This is a project we hacked together in a day, just for fun.  It's not our best 
+work, but it does work. =)
+
 
 == License
 
