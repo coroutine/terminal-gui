@@ -1,0 +1,147 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+ 
+ 
+/*-------------------------------------------------------
+  html selectors
+-------------------------------------------------------*/
+
+html {
+	height:				100%;
+}
+
+body {
+	margin:	0;
+	padding: 2px;
+	height:	100%;
+	font-family: "Monaco", monospace;
+	font-size: 10pt;
+	line-height:	1.4em;
+	background:	#111;
+	color: #fff;
+}
+
+form {
+	margin: 0;
+}
+
+ul {
+	margin:	0;
+	padding: 0;
+}
+
+li {
+	margin:	0;
+	padding: 0;
+	list-style: none;
+}
+
+li span {
+	display: inline-block;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+
+
+/*-------------------------------------------------------
+  prompt selectors
+-------------------------------------------------------*/
+
+#offscreen_container {
+	position: absolute;
+	left: -9999px;
+	z-index: 1;
+}
+
+#terminal_prompt_cursor.on {
+	background: #999;
+}
+
+#terminal_prompt_cursor.off {
+	background: #111;
+}
+
+
+
+/*-------------------------------------------------------
+  content selectors
+-------------------------------------------------------*/
+
+.content {
+	width: 700px;
+	margin-left: 20px;
+}
+
+.content .indented {
+	margin-left: 20px;
+	padding-top: 1em;
+}
+
+
+
+/*-------------------------------------------------------
+  help selectors
+-------------------------------------------------------*/
+
+.help ul {
+	width: 450px;
+}
+
+.help li {
+	display: inline;
+}
+
+.help li span {
+	width: 200px;
+	padding-left: 10px;
+}
+
+.help .indented {
+	margin-left: 20px;
+	width: 500px;
+}
+
+.help .required_option {
+	text-decoration: underline;
+}
+
+
+
+/*-------------------------------------------------------
+  ls selectors
+-------------------------------------------------------*/
+
+.ls_short ul {
+	width: 700px;
+}
+
+.ls_short li {
+	display: inline;
+}
+
+.ls_short li span {
+	width: 120px;
+}
+
+.ls_long ul {
+	width: 500px;
+}
+
+.ls_long li span {
+	width: 500px;
+}

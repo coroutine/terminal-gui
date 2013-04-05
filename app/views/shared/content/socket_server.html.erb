@@ -1,0 +1,77 @@
+<div class="content">
+	<div>
+		New Possibilities
+	</div>
+	
+	<div class="indented">
+		<p>
+			Most of the buzz surrounding the impending implementation of HTML 5.0 has centered on the 
+			effort to describe a common video codec.  And that is big news.  But it's not why we're champing 
+	                at the bit.
+		</p>
+		<br/>
+		<p>
+			It's WebSocket that has us excited.
+		</p>
+	</div>	
+	
+	<br/>
+	
+	<div>
+		A Quick Story
+	</div>
+
+	<div class="indented">
+		<p>
+			We've been thinking about the lack of native browser support for socket connections for some 
+			time.  A couple years ago, a client came to us with a problem.  They wanted 
+			to replace the desktop application used by their customer service agents with a web application, but 
+			they didn't know how they could communicate with their telephony switch without a persistent, two-way 
+			connection.
+		</p>
+		<br/>
+		<p>
+			In a controlled environment like this, the solution is fairly straight-forward.  First, you implement 
+			a scalable socket server between the telephone switch and the agents.  The server establishes all the connections 
+			and governs all the messaging between the two endpoints.  Then, because browsers don't support socket connections 
+			natively, you write a Flash object that implements a socket API and embed it in your web application.  Finally, 
+			you write enough JavaScript to create the socket connection via the Flash object, listen for incoming messages, 
+			and send outgoing messages.
+		</p>
+		<br/>
+		<p>
+			But what if it weren't a controlled environment?  Not all users on the web have the Flash plugin installed 
+			for their browser, and even the ones that do have different versions installed.  And, wait a minute.  How exactly 
+			is the work described in the preceding paragraph straight-forward? 
+		</p>
+	</div>
+
+	<br/>
+	
+	<div>
+		Our Idea
+	</div>
+	
+	<div class="indented">
+		<p>
+			Someone needs to make a generic, extensible application server designed around socket protocols.  
+		</p>
+		<br/>	
+		<p>
+			HTML 5.0 is going to simplify connections on the client side, but how many people do you know that 
+			can design and build a scalable socket server with a built-in, highly-concurrent messaging system? 
+			Come on.
+		</p>
+		<br/>
+		<p>
+			Okay, full disclosure.  We've actually built a prototype.  We'd never put it in production as is, but 
+			it validated a lot of our ideas about the feasibility of the project.  We're thinking about pursuing 
+			it, but we'd like to know how many business applications it has right now.
+		</p>
+		<br/>
+		<p>
+			So, tell us what you think.  If you could deploy your code to an application server like this, what 
+			could you do that you can't do now?
+		</p>
+	</div>
+</div>

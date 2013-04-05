@@ -1,0 +1,37 @@
+- content_for :js_onready do
+  :plain
+    // references
+    var terminal  = App.getTerminal();
+    var prompt    = terminal.getPrompt();
+    var $input    = $(prompt.getInputElement());
+
+    // event handlers
+    $input.on("blur",  prompt.onBlur.bind(prompt));
+    $input.on("focus", prompt.onFocus.bind(prompt));
+    $input.on("keyup", prompt.onKeyUp.bind(prompt));
+    $(document).on("click", prompt.setFocus.bind(prompt));
+    $('form').bind('ajax:complete', function(evt, xhr) {
+      terminal.appendPromptToOutput();
+      $('#OutputContainer').append(xhr.responseText);
+      App.adjustScrollTop();
+      prompt.record();
+      prompt.reset();
+    });
+    
+    // Force initial focus to hidden text field
+    prompt.setFocus();
+  
+  
+  
+#ScrollContainer
+  #OutputContainer
+    Last Login: 
+    = Time.now.utc.strftime("%a %b %d %H:%M:%S UTC")
+    on console
+    %br
+    Welcome to 
+    = domain_name
+    %br
+    Type 'help' for help.
+  #PromptContainer
+    = render :partial => 'shared/prompt'
