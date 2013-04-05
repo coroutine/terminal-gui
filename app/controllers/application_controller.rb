@@ -17,22 +17,10 @@ class ApplicationController < ActionController::Base
   #-------------------------------------------------
   private
   
-  # This method returns the path to the views in the content folder.
-  #
-  def content_view_path(folders = [], file = "")
-    s  = "#{RAILS_ROOT}/app/views/shared/content"
-    folders.each do |f|
-      s += "/#{f.to_s}"
-    end
-    s += "/#{file}.html.erb"
-  end
-  
   # This method returns a hash containing all the folders and files
   # at and underneath the user's current location
   #
   def file_system_for_current
-    return @file_system_for_current unless @file_system_for_current.nil?
-    
     files   = file_system
     current = session[:current_path] 
     if (current.length > 0)
@@ -40,14 +28,13 @@ class ApplicationController < ActionController::Base
         files = files.children[i]
       end
     end
-    @file_system_for_current = files
+    files
   end
   
   # This method returns a hash containing all the folders and files
   # that comprise the web site's structure
   #
   def file_system
-    return @root unless @root.nil?
     
     # root item
     root          = FileSystemItem.new("terminal-gui",  "directory",  0,    Time.utc(2009,"jun",27,14,55))
@@ -87,7 +74,6 @@ class ApplicationController < ActionController::Base
     
     # build root from top-level items
     root.add_child(blog).add_child(contact_us).add_child(our_company).add_child(our_work).add_child(the_crucible)
-    @root = root
   end
   
 end

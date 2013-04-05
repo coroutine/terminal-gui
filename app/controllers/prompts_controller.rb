@@ -15,9 +15,12 @@ class PromptsController < ApplicationController
   # insertion into the display container.
   #
   def create
-    cmd       = preprocess_command(params[:TerminalPromptOffScreen])
-    @output   = process_command(cmd)
+    cmd       = preprocess_command(params[:terminal][:prompt_offscreen])
+    @output   = process_command(cmd).html_safe
     @folder   = file_system_for_current.name
+    puts "="*80
+    puts @folder
+    puts "="*80
   end
   
   
@@ -28,14 +31,10 @@ class PromptsController < ApplicationController
   
   #================== HELPERS =================================
   
-  # This method returns the path to the views in the bash folder.
+  # This method returns the path to the views in the content folder.
   #
-  def bash_view_path(folders = [], file = "")
-    s  = "#{Rails.root}/app/views/bash"
-    folders.each do |f|
-      s += "/#{f.to_s}"
-    end
-    s += "/#{file}.html.haml"
+  def template_content(folder = 'content', partial = 'dummy', etx = 'erb')
+    render_to_string(:partial => "#{ Rails.root }/app/views/shared/#{ folder }/#{ partial }.html.#{ ext }")
   end
   
   # This method scrubs the user input and breaks it into components.
@@ -68,14 +67,14 @@ class PromptsController < ApplicationController
   # as a string.
   #
   def run_cat(cmds = ["cat"])
-    folders = []
+    folder  = 'content'
     file    = cmds[1] || ""
     
     return "cat: illegal command: File must be specified"   if     file.blank?
     return "cat: illegal command: File paths not supported" unless file.index("/").nil?
     
     begin
-      s = IO.read(content_view_path(folders, file))
+      s = IO.read(tempalte_path(folder, file))
     rescue
       s = "cat: #{file}: No such file"
     end
@@ -143,10 +142,10 @@ class PromptsController < ApplicationController
   # as a string.
   #
   def run_help(cmds = ["help"])
-    folder = cmds[0]
+    folder = 'help'
     file   = cmds[1] || "index"
     begin
-      s = IO.read(bash_view_path(folder, file))
+      s = IO.read(template_path(folder, file))
     rescue
       s = "-bash: help: no help topics match '#{file}'.  Try 'help help'"
     end
@@ -163,7 +162,7 @@ class PromptsController < ApplicationController
       if (option == "-l" or option.blank?)
         items   = file_system_for_current.children
         partial = (option == "-l") ? "long" : "short"
-        s       = render_to_string(:partial => "bash/ls/#{partial}", :items => items)
+        s       = render_to_string(:partial => "shared/ls/#{ partial }", :locals => { :items => items })
       else
         s = "ls: illegal option -- #{option}<br/>usage: ls [-l]"
       end

@@ -1,0 +1,5 @@
+.ls_long
+  %ul
+    - items.each do |item|
+      %li
+        %span= format_file_system_item_long(item)

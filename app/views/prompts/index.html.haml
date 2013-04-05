@@ -12,10 +12,16 @@
     $(document).on("click", prompt.setFocus.bind(prompt));
     $('form').bind('ajax:complete', function(evt, xhr) {
       terminal.appendPromptToOutput();
-      $('#OutputContainer').append(xhr.responseText);
+      
+      var $output = $('#OutputContainer');
+      $output.append(xhr.responseText);
+      
+      var folder = $output.find('.current_folder:last-child').text(); 
+      console.log($('.current_folder').last());
+      
       App.adjustScrollTop();
       prompt.record();
-      prompt.reset();
+      prompt.reset(folder);
     });
     
     // Force initial focus to hidden text field

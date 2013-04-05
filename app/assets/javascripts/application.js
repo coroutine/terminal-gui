@@ -136,7 +136,8 @@ App.Prompt = function() {
 	this.__history			= new App.PromptHistory();
 	
 	// state references
-	this.__cursorPosition 	= 0;
+	this.__currentFolder 	= '';
+    this.__cursorPosition 	= 0;
 	this.__hasFocus			= false;
 	this.__isCursorVisible	= true;
 	this.__previousLength	= 0;
@@ -257,7 +258,7 @@ App.Prompt.prototype.__loadCommandHistory = function(evt) {
 // supplied as an argument.  If no folder is provided, the root folder
 // will be used.
 App.Prompt.prototype.__setPromptLabel = function(folder) {
-	this.getLabelElement().innerHTML = App.domainName + folder + " anonymous$";
+	this.getLabelElement().innerHTML = App.domainName + ':' + folder + " anonymous$";
 };
 
 
@@ -403,7 +404,6 @@ App.Prompt.prototype.setFocus = function(evt) {
 		this.getInputElement().focus();
 	}
 };
-
 
 
 

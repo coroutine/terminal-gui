@@ -1,8 +1,8 @@
-= form_for :terminal, :method => :post, 'data-remote' => true do |f|
+= form_for :terminal, :method => :post, :remote => true do |f|
   %span#terminal_prompt_label
     = "#{ domain_name }:terminal-gui anonymous$"
   %span#terminal_prompt_before
-  %span#terminal_prompt_cursor.on 
+  %span#terminal_prompt_cursor.on>< 
     &nbsp;
   %span#terminal_prompt_after
   #offscreen_container
