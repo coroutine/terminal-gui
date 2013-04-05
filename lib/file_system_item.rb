@@ -10,7 +10,7 @@ class FileSystemItem
     @type             = type
     @permission       = "rwxr-xr-x"
     @owner            = "root"
-    @group            = "coroutine"
+    @group            = "root"
     @block_size       = block_size
     @published_at     = published_at
     @parent           = nil

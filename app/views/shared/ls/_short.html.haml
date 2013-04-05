@@ -2,4 +2,4 @@
   %ul
     - items.each do |item|
       %li
-        %span= format_file_system_item_short(item)
+        %span= format_file_system_item_short(item).html_safe

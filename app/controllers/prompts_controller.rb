@@ -18,10 +18,8 @@ class PromptsController < ApplicationController
     cmd       = preprocess_command(params[:terminal][:prompt_offscreen])
     @output   = process_command(cmd).html_safe
     @folder   = file_system_for_current.name
-    puts "="*80
-    puts @folder
-    puts "="*80
   end
+  
   
   
   # ----------------------------------------------
@@ -33,8 +31,8 @@ class PromptsController < ApplicationController
   
   # This method returns the path to the views in the content folder.
   #
-  def template_content(folder = 'content', partial = 'dummy', etx = 'erb')
-    render_to_string(:partial => "#{ Rails.root }/app/views/shared/#{ folder }/#{ partial }.html.#{ ext }")
+  def template_content(folder = 'content', partial = 'dummy')
+    render_to_string(:partial => "shared/#{ folder }/#{ partial }")
   end
   
   # This method scrubs the user input and breaks it into components.
@@ -56,7 +54,7 @@ class PromptsController < ApplicationController
       when "cd"   then run_cd(cmds)
       when "help" then run_help(cmds)
       when "ls"   then run_ls(cmds)
-      else "-bash: #{cmds[0]}: command not found"
+      else "-bash: #{ cmds[0] }: command not found"
     end
   end
   
@@ -74,9 +72,9 @@ class PromptsController < ApplicationController
     return "cat: illegal command: File paths not supported" unless file.index("/").nil?
     
     begin
-      s = IO.read(tempalte_path(folder, file))
+      s = template_content(folder, file)
     rescue
-      s = "cat: #{file}: No such file"
+      s = "cat: #{ $! }: No such file"
     end
     s
   end
@@ -105,7 +103,7 @@ class PromptsController < ApplicationController
       nodes.each do |n|
         if (n == "..")
           if (files.parent.nil? or files.parent.blank?)
-            raise "-bash: cd: #{cmds[1]}: No such file or directory"
+            raise "-bash: cd: #{ cmds[1] }: No such file or directory"
           else
             files = files.parent
             current.pop if current.length > 0
@@ -115,7 +113,7 @@ class PromptsController < ApplicationController
           files.children.each_with_index do |child, index|
             if (child.name == n)
               if (child.type == "file")
-                raise "-bash: cd: #{cmds[1]}: Not a directory"
+                raise "-bash: cd: #{ cmds[1] }: Not a directory"
               else
                 obj      = child
                 current << index
@@ -123,7 +121,7 @@ class PromptsController < ApplicationController
             end
           end
           if obj.nil?
-            raise "-bash: cd: #{cmds[1]}: No such file or directory"
+            raise "-bash: cd: #{ cmds[1] }: No such file or directory"
           else
             files = obj
           end
@@ -145,9 +143,9 @@ class PromptsController < ApplicationController
     folder = 'help'
     file   = cmds[1] || "index"
     begin
-      s = IO.read(template_path(folder, file))
+      s = template_content(folder, file)
     rescue
-      s = "-bash: help: no help topics match '#{file}'.  Try 'help help'"
+      s = "-bash: help: no help topics match '#{ file }'.  Try 'help help'"
     end
     s
   end
@@ -164,11 +162,12 @@ class PromptsController < ApplicationController
         partial = (option == "-l") ? "long" : "short"
         s       = render_to_string(:partial => "shared/ls/#{ partial }", :locals => { :items => items })
       else
-        s = "ls: illegal option -- #{option}<br/>usage: ls [-l]"
+        s = "ls: illegal option -- #{ option }<br/>usage: ls [-l]"
       end
     rescue
       s = "#{$!}"
     end
+    s
   end
   
 end

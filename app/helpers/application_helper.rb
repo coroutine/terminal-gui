@@ -20,8 +20,8 @@ module ApplicationHelper
   def format_file_system_item_long(fsi)
     return "" unless fsi
     
-    children   = fsi.get_total_child_count.to_s
-    block_size = fsi.get_total_block_size.to_s
+    children   = fsi.total_child_count.to_s
+    block_size = fsi.total_block_size.to_s
     
     s  = ""
     s += (fsi.type == "directory") ? "d" : "-"
